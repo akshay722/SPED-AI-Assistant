@@ -1,0 +1,9 @@
+# Ignore Python bytecode in sped-backend
+sped-backend/__pycache__/
+sped-backend/*.pyc
+sped-backend/*.pyo
+sped-backend/*.pyd
+
+# Ignore environment directory in sped-backend
+sped-backend/env/
+sped-backend/myenv

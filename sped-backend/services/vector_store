@@ -1,0 +1,24 @@
+from langchain.vectorstores import FAISS
+from transformers import AutoTokenizer, AutoModel
+import torch
+
+class VectorStore:
+    def __init__(self):
+        self.model_name = "sentence-transformers/all-MiniLM-L6-v2"
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+        self.model = AutoModel.from_pretrained(self.model_name)
+        self.index = FAISS(d=384)
+
+    def encode(self, text):
+        inputs = self.tokenizer(text, return_tensors="pt", padding=True, truncation=True)
+        with torch.no_grad():
+            outputs = self.model(**inputs)
+        embeddings = outputs.last_hidden_state.mean(dim=1)
+        return embeddings.cpu().numpy()
+
+    def add_to_index(self, text):
+        vector = self.encode(text)
+        self.index.add([vector])
+        return vector
+
+vector_store = VectorStore()
