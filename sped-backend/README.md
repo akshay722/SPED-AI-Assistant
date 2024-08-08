@@ -36,7 +36,6 @@ To start the server for your application, use the following command:
 
 ```shell
 uvicorn app:app --host localhost --port 8000
-
 nodemon --exec python3 app.py
 ```
 
